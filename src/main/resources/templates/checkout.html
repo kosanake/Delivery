@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delivery Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+
+<body>
+
+<form method="POST" th:action="@{/checkouts}" th:object="${checkout}">
+    <h1>Order your taco creations!</h1>
+
+    <img th:src="@{/images/TacoCloud.png}"/>
+    <a th:href="@{/delivery}" id="another">Adjust delivery</a><br/>
+
+    <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+        Please correct the problems below and resubmit.
+        </span>
+    </div>
+
+    <h3>Checout to...</h3>
+    <label for="name">Name: </label>
+    <input type="text" th:field="*{name}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}">Name Error</span>
+    <br/>
+
+    <label for="address">Street address: </label>
+    <input type="text" th:field="*{address}"/>
+    <!-- end::allButValidation[] -->
+    <span class="validationError"
+          th:if="${#fields.hasErrors('address')}"
+          th:errors="*{address}">Street Error</span>
+    <!-- tag::allButValidation[] -->
+    <br/>
+
+    <input type="submit" value="Submit order"/>
+</form>
+
+</body>
+</html>

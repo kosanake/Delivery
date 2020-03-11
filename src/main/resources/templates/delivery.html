@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delivery Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+
+<body>
+<h1>Items check</h1>
+
+<form method="POST" th:object="${delivery}">
+    <div class="grid">
+        <div class="ingredient-group" id="wraps">
+            <h3>Delivery overall</h3>
+            <div th:each="item : ${items}">
+                <input name="items" type="checkbox" th:value="${item.id}"/>
+                <span th:text="${item.name}">Item</span><br/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Delivery name:</h3>
+        <input type="text" th:field="*{name}"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}">Name Error</span>
+        <br/>
+        <button>Submit your dilivery</button>
+    </div>
+</form>
+</body>
+</html>
