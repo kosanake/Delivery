@@ -30,11 +30,9 @@
 
     <label for="address">Street address: </label>
     <input type="text" th:field="*{address}"/>
-    <!-- end::allButValidation[] -->
     <span class="validationError"
           th:if="${#fields.hasErrors('address')}"
           th:errors="*{address}">Street Error</span>
-    <!-- tag::allButValidation[] -->
     <br/>
 
     <input type="submit" value="Submit order"/>
