@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Checkout {
     private Date placedAt;
 
     @ManyToMany(targetEntity = Delivery.class)
-    private List<Delivery> deliveryList;
+    private List<Delivery> deliveryList = new ArrayList<>();
 
     @PrePersist
     void placedAt() {

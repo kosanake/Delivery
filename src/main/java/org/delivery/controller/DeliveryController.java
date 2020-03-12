@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.delivery.model.Checkout;
 import org.delivery.model.Delivery;
 import org.delivery.model.Item;
+import org.delivery.repository.DeliveryRepository;
 import org.delivery.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,10 +23,12 @@ import java.util.List;
 public class DeliveryController {
 
     private ItemRepository itemRepository;
+    private DeliveryRepository deliveryRepository;
 
     @Autowired
-    public DeliveryController(ItemRepository itemRepository) {
+    public DeliveryController(ItemRepository itemRepository, DeliveryRepository deliveryRepository) {
         this.itemRepository = itemRepository;
+        this.deliveryRepository = deliveryRepository;
     }
 
     @ModelAttribute(name = "checkout")
@@ -46,8 +50,12 @@ public class DeliveryController {
     }
 
     @PostMapping
-    public String submitDelivery(@Valid @ModelAttribute Delivery delivery) {
-        log.error("Process delivery: " + delivery);
+    public String submitDelivery(@Valid Delivery delivery, Errors errors, @ModelAttribute Checkout checkout) {
+        if (errors.hasErrors()) {
+            return "delivery";
+        }
+        deliveryRepository.save(delivery);
+        checkout.getDeliveryList().add(delivery);
         return "redirect:/checkouts/current";
     }
 }
