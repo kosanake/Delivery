@@ -7,10 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Data
 public class RegistrationWrapper {
 
-    private String userName;
-    private String userPassword;
+    private String username;
+    private String password;
 
     public User toUser(PasswordEncoder passwordEncoder) {
-        return new User(userName, passwordEncoder.encode(userPassword));
+        return new User(username, passwordEncoder.encode(password));
     }
 }

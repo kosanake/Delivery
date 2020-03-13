@@ -2,8 +2,10 @@ package org.delivery.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.delivery.model.Checkout;
+import org.delivery.model.security.User;
 import org.delivery.repository.CheckoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;

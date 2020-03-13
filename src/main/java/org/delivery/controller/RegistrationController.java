@@ -2,7 +2,6 @@ package org.delivery.controller;
 
 import org.delivery.controller.wrapper.RegistrationWrapper;
 import org.delivery.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/register")
 public class RegistrationController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
     public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -27,8 +25,9 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public void processRegistration(RegistrationWrapper w) {
+    public String processRegistration(RegistrationWrapper w) {
         userRepository.save(w.toUser(passwordEncoder));
+        return "redirect:/login";
     }
 
 }

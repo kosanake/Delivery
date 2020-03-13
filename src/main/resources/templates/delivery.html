@@ -8,8 +8,11 @@
 
 <body>
 <h1>Items check</h1>
+<form method="POST" th:action="@{/logout}" id="logoutForm">
+    <input type="submit" value="Logout"/>
+</form>
 
-<form method="POST" th:object="${delivery}">
+<form method="POST" th:object="${delivery}" th:action="@{/delivery}">
     <div class="grid">
         <div class="ingredient-group" id="wraps">
             <h3>Delivery overall</h3>

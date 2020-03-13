@@ -1,6 +1,7 @@
 package org.delivery.model;
 
 import lombok.Data;
+import org.delivery.model.security.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +22,9 @@ public class Delivery {
     @ManyToMany(targetEntity = Item.class)
     @Size(min = 1)
     private List<Item> items = new ArrayList<>();
+
+    @ManyToOne
+    private User user;
 
     @PrePersist
     public void createdAt() {

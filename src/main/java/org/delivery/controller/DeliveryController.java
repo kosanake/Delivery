@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.delivery.model.Checkout;
 import org.delivery.model.Delivery;
 import org.delivery.model.Item;
+import org.delivery.model.security.User;
 import org.delivery.repository.DeliveryRepository;
 import org.delivery.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -50,10 +52,12 @@ public class DeliveryController {
     }
 
     @PostMapping
-    public String submitDelivery(@Valid Delivery delivery, Errors errors, @ModelAttribute Checkout checkout) {
+    public String submitDelivery(@Valid Delivery delivery, Errors errors, @ModelAttribute Checkout checkout,
+                                 @AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             return "delivery";
         }
+        delivery.setUser(user);
         deliveryRepository.save(delivery);
         checkout.getDeliveryList().add(delivery);
         return "redirect:/checkouts/current";
